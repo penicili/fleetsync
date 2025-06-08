@@ -1,5 +1,5 @@
 @echo off
-REM filepath: d:\Kuliah\Semt 6\Integrasi Aplikasi Enterprise\starter.bat
+REM ini pny gw plis jangan disentuh/ di run soalnya bakal beda dan error meledak pc mu
 
 REM Fix variable assignments
 set authServiceLocation=D:\Kuliah\Semt 6\Integrasi Aplikasi Enterprise\TUBES\auth-service
