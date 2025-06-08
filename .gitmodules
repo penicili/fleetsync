@@ -1,0 +1,15 @@
+[submodule "driver-service"]
+	path = driver-service
+	url = https://github.com/pramathana/driver-service
+[submodule "Vehicle-Service"]
+	path = Vehicle-Service
+	url = https://github.com/luhatfimhalaf/Vehicle-Service
+[submodule "auth-service"]
+	path = auth-service
+	url = https://github.com/penicili/auth-service
+[submodule "frontend-fleetsync"]
+	path = frontend-fleetsync
+	url = https://github.com/penicili/frontend-fleetsync
+[submodule "route-service"]
+	path = route-service
+	url = https://github.com/titisyads/route-service
