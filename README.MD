@@ -10,3 +10,8 @@ docker build -t gateway-auth-service .
 
 buat jalanin image
 docker run -p 3001:3001 gateway-auth-service
+
+
+TODO: TAMBAHIN DATABASE 
+TODO: BUILD VEHICLE dan ROUTE 
+TODO: BIKIN DOCKER COMPOSE
