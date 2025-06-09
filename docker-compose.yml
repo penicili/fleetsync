@@ -1,0 +1,109 @@
+services:
+  auth-service:
+    build: ./auth-service
+    ports:
+      - '3001:3001'
+    networks:
+      - app-network
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DB_CONNECTION: mysql  
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: db_auth
+      DB_USERNAME: root
+      DB_PASSWORD: rootpassword
+
+  driver-service:
+    build: ./driver-service/DriverService
+    ports:
+      - '8001:8001'
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    environment:
+      DB_CONNECTION: mysql  
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: db_driver
+      DB_USERNAME: root
+      DB_PASSWORD: rootpassword
+
+  route-service:
+    build: ./route-service/route-service-fleetsync
+    ports:
+      - '8002:8002'
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    environment:
+      DB_CONNECTION: mysql  
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: db_route
+      DB_USERNAME: root
+      DB_PASSWORD: rootpassword
+
+  vehicle-service:
+    build: ./vehicle-service/FleetSync-Vehicle-Services
+    ports:
+      - '8003:8003'
+    depends_on:
+      db:
+        condition: service_healthy
+    networks:
+      - app-network
+    environment:
+      DB_CONNECTION: mysql  
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_DATABASE: db_vehicle
+      DB_USERNAME: root
+      DB_PASSWORD: rootpassword
+
+  frontend:
+    build: ./frontend-fleetsync
+    ports:
+      - '3000:3000'
+    networks:
+      - app-network
+    environment:
+      REACT_APP_AUTH_SERVICE_URL: http://auth-service:3001
+      REACT_APP_DRIVER_SERVICE_URL: http://driver-service:8001
+      REACT_APP_ROUTE_SERVICE_URL: http://route-service:8002
+      REACT_APP_VEHICLE_SERVICE_URL: http://vehicle-service:8003
+    depends_on:
+      - auth-service
+      - driver-service
+      - route-service
+      - vehicle-service
+
+  db:
+    image: mysql:latest
+    ports:
+      - '3306:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./init-databases.sh:/docker-entrypoint-initdb.d/init-databases.sh
+    networks:
+      - app-network
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 5s
+      retries: 10
+    restart: always
+
+volumes:
+  mysql_data:
+
+networks:
+  app-network:
+    driver: bridge
