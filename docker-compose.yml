@@ -9,13 +9,6 @@ services:
       db:
         condition: service_healthy
     environment:
-      DB_CONNECTION: mysql  
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_DATABASE: db_auth
-      DB_USERNAME: root
-      DB_PASSWORD: rootpassword
-      # Add service URLs for server-to-server communication
       DRIVER_SERVICE_URL: http://driver-service:8001/api
       ROUTE_SERVICE_URL: http://route-service:8002/api
       VEHICLE_SERVICE_URL: http://vehicle-service:8000/api
@@ -82,6 +75,7 @@ services:
       AUTH_SERVICE_URL: http://auth-service:3001/api
       DRIVER_SERVICE_URL: http://driver-service:8001/api
       ROUTE_SERVICE_URL: http://route-service:8002/api
+      VEHICLE_SERVICE_URL: http://route-service:8002/api
 
   frontend:
     build: ./frontend-fleetsync
@@ -98,7 +92,7 @@ services:
       
       # NextAuth configuration (server-side)
       NEXTAUTH_URL: http://localhost:3000
-      NEXTAUTH_SECRET: your-secret-key-here
+      NEXTAUTH_SECRET: 454e99ef6c3dba91a3fe1e51ee4da9c34e080f31f714ffd5cdb9a6eda0c8ce3b
       
       # Server-side URLs for NextAuth API routes
       AUTH_SERVICE_URL: http://auth-service:3001/auth
