@@ -15,6 +15,10 @@ services:
       DB_DATABASE: db_auth
       DB_USERNAME: root
       DB_PASSWORD: rootpassword
+      # Add service URLs for server-to-server communication
+      DRIVER_SERVICE_URL: http://driver-service:8001/api
+      ROUTE_SERVICE_URL: http://route-service:8002/api
+      VEHICLE_SERVICE_URL: http://vehicle-service:8000/api
 
   driver-service:
     build: ./driver-service/DriverService
@@ -32,6 +36,10 @@ services:
       DB_DATABASE: db_driver
       DB_USERNAME: root
       DB_PASSWORD: rootpassword
+      # Add other service URLs if this service calls them
+      AUTH_SERVICE_URL: http://auth-service:3001/api
+      ROUTE_SERVICE_URL: http://route-service:8002/api
+      VEHICLE_SERVICE_URL: http://vehicle-service:8000/api
 
   route-service:
     build: ./route-service/route-service-fleetsync
@@ -49,11 +57,15 @@ services:
       DB_DATABASE: db_route
       DB_USERNAME: root
       DB_PASSWORD: rootpassword
+      # Add other service URLs
+      AUTH_SERVICE_URL: http://auth-service:3001/api
+      DRIVER_SERVICE_URL: http://driver-service:8001/api
+      VEHICLE_SERVICE_URL: http://vehicle-service:8000/api
 
   vehicle-service:
     build: ./vehicle-service/FleetSync-Vehicle-Services
     ports:
-      - '8003:8003'
+      - '8000:8000'  # Fixed: was 8003 in frontend env
     depends_on:
       db:
         condition: service_healthy
@@ -66,6 +78,10 @@ services:
       DB_DATABASE: db_vehicle
       DB_USERNAME: root
       DB_PASSWORD: rootpassword
+      # Add other service URLs
+      AUTH_SERVICE_URL: http://auth-service:3001/api
+      DRIVER_SERVICE_URL: http://driver-service:8001/api
+      ROUTE_SERVICE_URL: http://route-service:8002/api
 
   frontend:
     build: ./frontend-fleetsync
@@ -74,10 +90,25 @@ services:
     networks:
       - app-network
     environment:
-      REACT_APP_AUTH_SERVICE_URL: http://auth-service:3001
-      REACT_APP_DRIVER_SERVICE_URL: http://driver-service:8001
-      REACT_APP_ROUTE_SERVICE_URL: http://route-service:8002
-      REACT_APP_VEHICLE_SERVICE_URL: http://vehicle-service:8003
+      # Client-side URLs (browser accessible)
+      REACT_APP_AUTH_SERVICE_URL: http://localhost:3001
+      REACT_APP_DRIVER_SERVICE_URL: http://localhost:8001
+      REACT_APP_ROUTE_SERVICE_URL: http://localhost:8002
+      REACT_APP_VEHICLE_SERVICE_URL: http://localhost:8000  # Fixed port
+      
+      # NextAuth configuration (server-side)
+      NEXTAUTH_URL: http://localhost:3000
+      NEXTAUTH_SECRET: your-secret-key-here
+      
+      # Server-side URLs for NextAuth API routes
+      AUTH_SERVICE_URL: http://auth-service:3001/auth
+      GATEWAY_SERVICE_URL: http://gateway-service:3001/api
+      DRIVER_SERVICE_URL: http://driver-service:8001/api
+      ROUTE_SERVICE_URL: http://route-service:8002/api
+      VEHICLE_SERVICE_URL: http://vehicle-service:8000/api
+      API_AUTH_URL: http://auth-service:3001/auth
+      API_GATEWAY_URL: http://auth-service:3001/api
+
     depends_on:
       - auth-service
       - driver-service

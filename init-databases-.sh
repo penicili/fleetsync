@@ -3,7 +3,7 @@ set -e
 
 echo "Creating databases..."
 
-mysql -u root -p rootpassword <<-EOSQL
+mysql -u root -p"$MYSQL_ROOT_PASSWORD" <<-EOSQL
     CREATE DATABASE IF NOT EXISTS db_auth;
     CREATE DATABASE IF NOT EXISTS db_driver;
     CREATE DATABASE IF NOT EXISTS db_vehicle;
@@ -17,4 +17,4 @@ mysql -u root -p rootpassword <<-EOSQL
     FLUSH PRIVILEGES;
 EOSQL
 
-echo "Databases created."
+echo "Databases created successfully!"
