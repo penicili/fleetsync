@@ -1,5 +1,12 @@
 # TUGAS BESAR INTEGRASI APLIKASI ENTERPRISE
 
+## KELOMPOK 7 SI4606
+MIFTAHUL FALAH
+KATON BAGASKORO
+TITISYA DEWI
+STEFANUS JESANO
+
+
 ## Service-Oriented Multi-Container Application
 
 Proyek ini merupakan implementasi arsitektur **Service-Oriented Architecture (SOA)** berbasis multi-container menggunakan Docker. Setiap service berjalan secara independen di dalam containernya masing-masing dan hanya berkomunikasi dengan service lain melalui endpoint yang telah ditentukan.
