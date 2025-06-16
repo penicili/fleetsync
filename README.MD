@@ -44,3 +44,7 @@ Proyek ini merupakan implementasi arsitektur **Service-Oriented Architecture (SO
 > Untuk membangun dan menjalankan aplikasi, gunakan perintah `docker-compose up --build` dari root project.
 
 ---
+
+### Dokumentasi
+- Auth & Gateway Service: /docs
+- driver, vehicle, route Service: /api/documentation
