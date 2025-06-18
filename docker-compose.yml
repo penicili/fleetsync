@@ -1,6 +1,9 @@
 services:
   auth-service:
     build: ./auth-service
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
     ports:
       - '3001:3001'
     networks:
