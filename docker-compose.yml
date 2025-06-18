@@ -12,6 +12,8 @@ services:
       DRIVER_SERVICE_URL: http://driver-service:8001/api
       ROUTE_SERVICE_URL: http://route-service:8002/api
       VEHICLE_SERVICE_URL: http://vehicle-service:8000/api
+      DATABASE_URL : mongodb+srv://bagaskoro55:3zLkXUkZJcgFYYVG@cluster0.9cdollc.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
+      SECRET : 454e99ef6c3dba91a3fe1e51ee4da9c34e080f31f714ffd5cdb9a6eda0c8ce3b
 
   driver-service:
     build: ./driver-service/DriverService
